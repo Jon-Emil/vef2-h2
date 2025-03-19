@@ -13,16 +13,7 @@
     }
   ],
   "headers": [],
-  "dynamicRoutes": [
-    {
-      "page": "/flokkar/[flokkur]",
-      "regex": "^/flokkar/([^/]+?)(?:/)?$",
-      "routeKeys": {
-        "nxtPflokkur": "nxtPflokkur"
-      },
-      "namedRegex": "^/flokkar/(?<nxtPflokkur>[^/]+?)(?:/)?$"
-    }
-  ],
+  "dynamicRoutes": [],
   "staticRoutes": [
     {
       "page": "/",
@@ -43,10 +34,10 @@
       "namedRegex": "^/favicon\\.ico(?:/)?$"
     },
     {
-      "page": "/flokkar",
-      "regex": "^/flokkar(?:/)?$",
+      "page": "/genres",
+      "regex": "^/genres(?:/)?$",
       "routeKeys": {},
-      "namedRegex": "^/flokkar(?:/)?$"
+      "namedRegex": "^/genres(?:/)?$"
     }
   ],
   "dataRoutes": [],
