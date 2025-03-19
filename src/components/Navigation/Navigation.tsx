@@ -7,7 +7,7 @@ export default function Navigation() {
     <nav className={styles.nav}>
       <ul>
         <li><Link href="/">Forsíða</Link></li>
-        <li><Link href="/flokkar">Flokkar</Link></li>
+        <li><Link href="/genres?page=1">Genres</Link></li>
       </ul>
     </nav>
   );

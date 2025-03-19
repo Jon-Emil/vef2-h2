@@ -1,9 +1,38 @@
 export type UiState = 'initial' | 'loading' | 'error' | 'data' | 'empty';
 
-export type Category = {
+export type GenericGenre = {
   id: string;
-  slug: string;
   name: string;
+};
+
+export type GenericMovie = {
+  id: string;
+  title: string;
+  year: number;
+  director: string;
+  img_url: string;
+  description: string;
+  slug: string; 
+  genres: string[];
+};
+
+export type GenreWithMovies = {
+  id: string;
+  name: string;
+  movies: GenericMovie[];
+};
+
+export type MovieWithRating = {
+  id: string;
+  title: string;
+  year: number;
+  director: string;
+  img_url: string;
+  description: string;
+  slug: string; 
+  genres: string[];
+  user_rating: number;
+  user_status: string; 
 };
 
 export type Paginated<T> = {
@@ -11,17 +40,4 @@ export type Paginated<T> = {
   total: number;
   limit: number;
   offset: number;
-};
-
-export type Answer = {
-  id: number;
-  text: string;
-  correct: boolean;
-};
-
-export type Question = {
-  id: number;
-  text: string;
-  answers: Answer[];
-  category: Category;
 };
