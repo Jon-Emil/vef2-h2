@@ -1,6 +1,6 @@
-import { GenericGenre, Paginated } from './types';
+import { GenericGenre, Paginated } from "./types";
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? 'http://localhost:8000';
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:8000";
 
 export class QuestionsApi {
   async fetchFromApi<T>(url: string): Promise<T | null> {
@@ -8,12 +8,12 @@ export class QuestionsApi {
     try {
       response = await fetch(url);
     } catch (e) {
-      console.error('error fetching from api', url, e);
+      console.error("error fetching from api", url, e);
       return null;
     }
 
     if (!response.ok) {
-      console.error('non 2xx status from API', url);
+      console.error("non 2xx status from API", url);
       return null;
     }
 
@@ -21,7 +21,7 @@ export class QuestionsApi {
     try {
       json = await response.json();
     } catch (e) {
-      console.error('error parsing json', url, e);
+      console.error("error parsing json", url, e);
       return null;
     }
 
@@ -29,7 +29,7 @@ export class QuestionsApi {
   }
 
   async getGenres(page: number): Promise<Paginated<GenericGenre> | null> {
-    const url = BASE_URL + `/genres?offset=${page-1}`;
+    const url = BASE_URL + `/genres?offset=${page - 1}`;
 
     const response = await this.fetchFromApi<Paginated<GenericGenre>>(url);
 
