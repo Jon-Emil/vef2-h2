@@ -1,4 +1,4 @@
-import { Category, Paginated } from './types';
+import { GenericGenre, Paginated } from './types';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? 'http://localhost:8000';
 
@@ -28,18 +28,10 @@ export class QuestionsApi {
     return json as T;
   }
 
-  async getCategory(slug: string): Promise<Category | null> {
-    const url = BASE_URL + `/categories/${slug}`;
+  async getGenres(page: number): Promise<Paginated<GenericGenre> | null> {
+    const url = BASE_URL + `/genres?offset=${page-1}`;
 
-    const response = await this.fetchFromApi<Category | null>(url);
-
-    return response;
-  }
-
-  async getCategories(): Promise<Paginated<Category> | null> {
-    const url = BASE_URL + '/categories';
-
-    const response = await this.fetchFromApi<Paginated<Category>>(url);
+    const response = await this.fetchFromApi<Paginated<GenericGenre>>(url);
 
     // TODO hér gæti ég staðfest gerð gagna
 
