@@ -1,0 +1,7 @@
+{
+  "/_not-found/page": "/_not-found",
+  "/favicon.ico/route": "/favicon.ico",
+  "/flokkar/[flokkur]/page": "/flokkar/[flokkur]",
+  "/flokkar/page": "/flokkar",
+  "/page": "/"
+}
