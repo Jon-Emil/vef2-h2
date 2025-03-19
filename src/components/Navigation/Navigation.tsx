@@ -8,6 +8,7 @@ export default function Navigation() {
       <ul>
         <li><Link href="/">Forsíða</Link></li>
         <li><Link href="/genres?page=1">Genres</Link></li>
+        <li><Link href="/movies?page=1">Movies</Link></li>
       </ul>
     </nav>
   );
