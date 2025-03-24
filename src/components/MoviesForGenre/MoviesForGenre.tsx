@@ -1,7 +1,7 @@
 'use client';
 
 import { QuestionsApi } from '@/api';
-import { GenericMovie, GenreWithMovies, Paginated, PaginatedGenre, UiState } from '@/types';
+import { PaginatedGenre, UiState } from '@/types';
 import { useEffect, useState } from 'react';
 
 import { useSearchParams } from "next/navigation";
@@ -31,7 +31,7 @@ export default function Movies({ genre_id }: { genre_id: number }) {
       }
     }
     fetchData();
-  }, [page]);
+  }, [page, genre_id]);
 
 
   return (
