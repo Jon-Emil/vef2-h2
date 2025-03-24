@@ -24,7 +24,7 @@ export default function Movies() {
       setUiState('loading');
 
       const api = new QuestionsApi();
-      let movieResponse = await api.getMovies(page);
+      const movieResponse = await api.getMovies(parseInt(page));
 
       if (!movieResponse) {
         setUiState('error');
