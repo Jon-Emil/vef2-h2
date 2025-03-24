@@ -5,6 +5,7 @@ import { GenericMovie, Paginated, UiState } from '@/types';
 import { useEffect, useState } from 'react';
 
 import { useSearchParams } from "next/navigation";
+import Link from 'next/link';
 
 
 export default function Movies() {
@@ -12,22 +13,27 @@ export default function Movies() {
   const [movies, setMovies] = useState<Paginated<GenericMovie> | null>(
     null,
   );
+  const [limit, setLimit] = useState<number>(10);
+  const [total, setTotal] = useState<number>(0);
  
   const searchParams = useSearchParams();
-  const page = searchParams.get("page") ?? "1";
+  const page = parseInt(searchParams.get("page") ?? "1");
 
   useEffect(() => {
     async function fetchData() {
       setUiState('loading');
 
       const api = new QuestionsApi();
-      let movieResponse = await api.getMovies(parseInt(page));
+      let movieResponse = await api.getMovies(page);
 
       if (!movieResponse) {
         setUiState('error');
       } else {
         setUiState('data');
         setMovies(movieResponse);
+        setLimit(movieResponse.limit);
+        setTotal(movieResponse.total);
+        console.log(movieResponse);
       }
     }
     fetchData();
@@ -60,6 +66,10 @@ export default function Movies() {
           ))}
         </ul>
       )}
+      <ul>
+        {page > 1 && <li><Link href={`/movies?page=${page-1}`}>prev</Link></li>}
+        {page < total / limit && <li><Link href={`/movies?page=${page+1}`}>next</Link></li>}
+      </ul>
     </div>
   );
 }
