@@ -50,7 +50,7 @@ export class QuestionsApi {
   ): Promise<PaginatedGenre | null> {
     const url = BASE_URL + `/movies/genres/${genre_id}?offset=${page - 1}`;
 
-    let response = await this.fetchFromApi<PaginatedGenre>(url);
+    const response = await this.fetchFromApi<PaginatedGenre>(url);
 
     // TODO hér gæti ég staðfest gerð gagna
 
