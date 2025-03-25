@@ -21,12 +21,12 @@ export default function Login() {
 
         if(typeof response === 'string'){
             alert(response)
+            return;
         }
 
         console.log(response)
 
-        //TODO cookies með response.data.token??
-        
+        document.cookie = `auth=${response.token}; path=/; Secure; SameSite=Strict`;
     }
 
   return (

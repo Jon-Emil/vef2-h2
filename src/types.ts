@@ -51,5 +51,17 @@ export type Paginated<T> = {
 
 export type UserInfo = {
   username: string;
-  password: string; 
-}
+  password: string;
+};
+
+export type User = {
+  id: number;
+  username: string;
+  password: string;
+  admin: boolean;
+};
+
+export type tokenReturn = {
+  message: string;
+  token: string;
+};
