@@ -3,6 +3,8 @@ import {
   GenericMovie,
   Paginated,
   PaginatedGenre,
+  tokenReturn,
+  User,
   UserInfo,
 } from "./types";
 
@@ -68,43 +70,77 @@ export class QuestionsApi {
     return response;
   }
 
-  async logUserIn(user: UserInfo){
-    console.log("user data: ", user)
-    const url = BASE_URL + '/users/log_in'
+  async logUserIn(user: UserInfo): Promise<tokenReturn | string> {
+    console.log("user data: ", user);
+    const url = BASE_URL + "/users/log_in";
 
     const response = await fetch(url, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(user)
-    })
+      body: JSON.stringify(user),
+    });
 
-    if(response.status === 400){
+    if (response.status === 400) {
       //túlka villuna sem json þar sem API skilar json villum fyrir 400 status
       const errorResponse = await response.json();
 
-      const errorMessage = errorResponse.error || 'Unknown error occurred';
+      const errorMessage = errorResponse.error || "Unknown error occurred";
       const fieldErrors = errorResponse.errors?.fieldErrors || {};
 
       //Túlka allar fieldError villur til að birta allt sem var að
       for (const field in fieldErrors) {
         if (fieldErrors[field].length > 0) {
-          console.error(`${field}: ${fieldErrors[field].join(', ')}`);
+          console.error(`${field}: ${fieldErrors[field].join(", ")}`);
         }
       }
-      //skila streng af villum. 
+      //skila streng af villum.
       return `${errorMessage}: ${JSON.stringify(fieldErrors)}`;
     }
 
-    if(response.status === 404){
-      return "User not found"
+    if (response.status === 404) {
+      return "User not found";
     }
 
-    if(!response.ok){
+    if (!response.ok) {
       return "Failed to log user in " + response.statusText;
     }
 
     return await response.json();
+  }
+
+  async getUser(): Promise<User | null> {
+    const cookies = document.cookie.split("; ");
+    console.log(cookies);
+    const tokenCookie = cookies.find((row) => row.startsWith("auth="));
+    console.log(tokenCookie);
+    const token = tokenCookie ? tokenCookie.split("=")[1] : null;
+    console.log(token);
+
+    if (!token) {
+      console.error("invalid token");
+      return null;
+    }
+
+    const url = BASE_URL + "/user";
+
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      console.error("an error came up when fetching user");
+      return null;
+    }
+
+    const data = await response.json();
+    console.log("User data:", data);
+
+    return data;
   }
 }

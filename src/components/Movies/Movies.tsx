@@ -3,7 +3,7 @@
 import { QuestionsApi } from '@/api';
 import { GenericMovie, Paginated, UiState } from '@/types';
 import { useEffect, useState } from 'react';
-
+import styles from './Movies.module.css';
 import { useSearchParams } from "next/navigation";
 import Link from 'next/link';
 
@@ -50,9 +50,9 @@ export default function Movies() {
         <ul>
           {movies?.data.map((movie, index) => (
             <li key={index}>
-                <div>
+                <div className={styles.movie}>
                     <img src={movie.img_url} style={{ maxWidth: "250px", height: "auto" }}/>
-                    <div>
+                    <div className={styles.movieInfo}>
                         <p>{movie.title}</p>
                         <p>{movie.year}</p>
                         <ul>
