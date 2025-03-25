@@ -1,9 +1,9 @@
 import {
   GenericGenre,
   GenericMovie,
-  GenreWithMovies,
   Paginated,
   PaginatedGenre,
+  UserInfo,
 } from "./types";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:8000";
@@ -66,5 +66,45 @@ export class QuestionsApi {
     // TODO hér gæti ég staðfest gerð gagna
 
     return response;
+  }
+
+  async logUserIn(user: UserInfo){
+    console.log("user data: ", user)
+    const url = BASE_URL + '/users/log_in'
+
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(user)
+    })
+
+    if(response.status === 400){
+      //túlka villuna sem json þar sem API skilar json villum fyrir 400 status
+      const errorResponse = await response.json();
+
+      const errorMessage = errorResponse.error || 'Unknown error occurred';
+      const fieldErrors = errorResponse.errors?.fieldErrors || {};
+
+      //Túlka allar fieldError villur til að birta allt sem var að
+      for (const field in fieldErrors) {
+        if (fieldErrors[field].length > 0) {
+          console.error(`${field}: ${fieldErrors[field].join(', ')}`);
+        }
+      }
+      //skila streng af villum. 
+      return `${errorMessage}: ${JSON.stringify(fieldErrors)}`;
+    }
+
+    if(response.status === 404){
+      return "User not found"
+    }
+
+    if(!response.ok){
+      return "Failed to log user in " + response.statusText;
+    }
+
+    return await response.json();
   }
 }

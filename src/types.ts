@@ -48,3 +48,8 @@ export type Paginated<T> = {
   limit: number;
   offset: number;
 };
+
+export type UserInfo = {
+  username: string;
+  password: string; 
+}
