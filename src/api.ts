@@ -46,11 +46,23 @@ export class QuestionsApi {
     return response;
   }
 
+  async getAllGenres(): Promise<Paginated<GenericGenre> | null> {
+    const url = BASE_URL + `/genres?limit=99999`;
+
+    const response = await this.fetchFromApi<Paginated<GenericGenre>>(url);
+
+    // TODO hér gæti ég staðfest gerð gagna
+
+    return response;
+  }
+
   async getMoviesForGenre(
     page: number,
-    genre_id: number
+    genre_id: number,
+    limit: number = 10
   ): Promise<PaginatedGenre | null> {
-    const url = BASE_URL + `/movies/genres/${genre_id}?offset=${page - 1}`;
+    const url =
+      BASE_URL + `/movies/genres/${genre_id}?offset=${page - 1}&limit=${limit}`;
 
     const response = await this.fetchFromApi<PaginatedGenre>(url);
 
@@ -59,9 +71,22 @@ export class QuestionsApi {
     return response;
   }
 
-  async getMovies(page: number): Promise<Paginated<GenericMovie> | null> {
+  async getAllMoviesForGenre(genre_id: number): Promise<PaginatedGenre | null> {
+    const url = BASE_URL + `/movies/genres/${genre_id}?limit=99999`;
+
+    const response = await this.fetchFromApi<PaginatedGenre>(url);
+
+    // TODO hér gæti ég staðfest gerð gagna
+
+    return response;
+  }
+
+  async getMovies(
+    page: number,
+    limit: number = 10
+  ): Promise<Paginated<GenericMovie> | null> {
     console.log(page);
-    const url = BASE_URL + `/movies?offset=${page - 1}`;
+    const url = BASE_URL + `/movies?offset=${page - 1}&limit=${limit}`;
 
     const response = await this.fetchFromApi<Paginated<GenericMovie>>(url);
 
@@ -112,14 +137,11 @@ export class QuestionsApi {
 
   async getUser(): Promise<User | null> {
     const cookies = document.cookie.split("; ");
-    console.log(cookies);
     const tokenCookie = cookies.find((row) => row.startsWith("auth="));
-    console.log(tokenCookie);
     const token = tokenCookie ? tokenCookie.split("=")[1] : null;
-    console.log(token);
 
     if (!token) {
-      console.error("invalid token");
+      console.log("invalid token");
       return null;
     }
 
@@ -134,7 +156,7 @@ export class QuestionsApi {
     });
 
     if (!response.ok) {
-      console.error("an error came up when fetching user");
+      console.log("an error came up when fetching user");
       return null;
     }
 
