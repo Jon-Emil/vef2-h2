@@ -55,10 +55,6 @@ footer > div {
   align-items: center;
 }
 
-footer ul {
-  list-style: lower-roman;
-}
-
 footer a {
   color: red;
   text-decoration: underline;
