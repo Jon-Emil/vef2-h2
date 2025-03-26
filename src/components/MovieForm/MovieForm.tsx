@@ -20,7 +20,7 @@ export default function Form() {
         setUiState('empty');
   
         const api = new QuestionsApi();
-        const genreResponse = await api.getGenresLimit(100000);
+        const genreResponse = await api.getAllGenres();
   
         if (!genreResponse) {
           setUiState('error');
