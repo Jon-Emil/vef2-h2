@@ -1,38 +1,54 @@
-export type UiState = 'initial' | 'loading' | 'error' | 'data' | 'empty';
+export type UiState = "initial" | "loading" | "error" | "data" | "empty" | "created";
 
 export type GenericGenre = {
-  id: string;
+  id: number;
   name: string;
 };
 
 export type GenericMovie = {
-  id: string;
+  id: number;
   title: string;
   year: number;
   director: string;
   img_url: string;
   description: string;
-  slug: string; 
+  slug: string;
   genres: string[];
 };
 
+export type MovieFormData = {
+  title: string;
+  year: string;
+  director: string;
+  image: File;
+  description: string;
+  genres: string[];  
+}
+
 export type GenreWithMovies = {
-  id: string;
+  id: number;
   name: string;
   movies: GenericMovie[];
 };
 
 export type MovieWithRating = {
-  id: string;
+  id: number;
   title: string;
   year: number;
   director: string;
   img_url: string;
   description: string;
-  slug: string; 
+  slug: string;
   genres: string[];
   user_rating: number;
-  user_status: string; 
+  user_status: string;
+};
+
+export type PaginatedGenre = {
+  data: GenreWithMovies;
+  total: number;
+  limit: number;
+  offset: number;
 };
 
 export type Paginated<T> = {
@@ -40,4 +56,21 @@ export type Paginated<T> = {
   total: number;
   limit: number;
   offset: number;
+};
+
+export type UserInfo = {
+  username: string;
+  password: string;
+};
+
+export type User = {
+  id: number;
+  username: string;
+  password: string;
+  admin: boolean;
+};
+
+export type tokenReturn = {
+  message: string;
+  token: string;
 };

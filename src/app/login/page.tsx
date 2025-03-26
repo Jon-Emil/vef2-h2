@@ -1,14 +1,12 @@
 import Navigation from "@/components/Navigation/Navigation";
-import Genres from "@/components/Genres/Genres";
-
-
+import Login from "@/components/Login/Login";
 
 export default async function Home() {
 
   return (
     <div>
       <Navigation />
-      <Genres />
+      <Login/>
     </div>
   );
 }

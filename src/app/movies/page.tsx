@@ -1,14 +1,12 @@
 import Navigation from "@/components/Navigation/Navigation";
-import Genres from "@/components/Genres/Genres";
-
-
+import Movies from "@/components/Movies/Movies";
 
 export default async function Home() {
 
   return (
     <div>
       <Navigation />
-      <Genres />
+      <Movies />
     </div>
   );
 }
