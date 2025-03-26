@@ -1,57 +1,72 @@
 'use client';
 
 import { QuestionsApi } from '@/api';
-import { GenericGenre, Paginated, UiState } from '@/types';
+import { GenericGenre, UiState } from '@/types';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import styles from "./Genre.module.css";
 
-import { useSearchParams } from "next/navigation";
 
 
-export default function Genres() {
+export default function Genres({ genre }: { genre: string }) {
   const [uiState, setUiState] = useState<UiState>('initial');
-  const [genres, setGenres] = useState<Paginated<GenericGenre> | null>(
-    null,
+  const [movieAmount, setMovieAmount] = useState<number>(
+    0,
   );
-
-  const searchParams = useSearchParams();
-  const page = searchParams.get("page") ?? "1";
-
-
+  const [genreItem, setGenreItem] = useState<GenericGenre | null>(null);
 
   useEffect(() => {
     async function fetchData() {
       setUiState('loading');
 
       const api = new QuestionsApi();
-      const genreResponse = await api.getGenres(parseInt(page));
+      const allGenres = await api.getAllGenres();
+      if (!allGenres) {
+        setUiState('error');
+        return
+      }
+      const genreItem = allGenres.data.find(genreItem => genreItem.name === genre);
+      if (!genreItem) {
+        setUiState('error');
+        return
+      }
+      const genreResponse = await api.getAllMoviesForGenre(genreItem.id);
 
       if (!genreResponse) {
         setUiState('error');
       } else {
         setUiState('data');
-        setGenres(genreResponse);
+        let amountOfMovies = 0;
+        for (let movie of genreResponse.data.movies) {
+            amountOfMovies++;
+        }
+        setGenreItem(genreItem);
+        setMovieAmount(amountOfMovies);
       }
     }
     fetchData();
-  }, [page]);
+  }, []);
 
 
   return (
-    <div>
-      <h2>All genres</h2>
-
-      {uiState === 'loading' && <p>Sæki genres</p>}
-      {uiState === 'error' && <p>Villa við að sækja genres</p>}
-      {uiState === 'data' && (
-        <ul>
-          {genres?.data.map((genre, id) => (
-            <li key={id}>
-              <Link href={`/genres/${genre.id}`}>{genre.name}</Link>
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
+    genreItem ? (
+      <Link className={styles.genre} href={`/genres/${genreItem.id}`}>
+        {uiState === "loading" && (
+          <div className={styles.movieAmount}>
+            <div className={styles.loader}></div>
+          </div>
+        )}
+        {uiState === "error" && <p className={styles.movieAmount}>?</p>}
+        {uiState === "data" && <p className={styles.movieAmount}>{movieAmount}</p>}
+        <p className={styles.genreName}>{genreItem.name}</p>
+      </Link>
+    ) : (
+      <div className={styles.genre}>
+        <div className={styles.movieAmount}>
+          <div className={styles.loader}></div>
+        </div>
+        <p className={styles.genreName}>{genre}</p>
+      </div>
+    )
   );
 }
