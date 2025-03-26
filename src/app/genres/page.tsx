@@ -1,15 +1,14 @@
 import Navigation from "@/components/Navigation/Navigation";
-import styles from "./page.module.css";
-import Genre from "@/components/Genre/Genre";
+import Genres from "@/components/Genres/Genres";
 
 
 
 export default async function Home() {
 
   return (
-    <div className={styles.page}>
+    <div>
       <Navigation />
-      <Genre />
+      <Genres />
     </div>
   );
 }

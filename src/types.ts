@@ -1,12 +1,12 @@
 export type UiState = "initial" | "loading" | "error" | "data" | "empty";
 
 export type GenericGenre = {
-  id: string;
+  id: number;
   name: string;
 };
 
 export type GenericMovie = {
-  id: string;
+  id: number;
   title: string;
   year: number;
   director: string;
@@ -17,13 +17,13 @@ export type GenericMovie = {
 };
 
 export type GenreWithMovies = {
-  id: string;
+  id: number;
   name: string;
   movies: GenericMovie[];
 };
 
 export type MovieWithRating = {
-  id: string;
+  id: number;
   title: string;
   year: number;
   director: string;
