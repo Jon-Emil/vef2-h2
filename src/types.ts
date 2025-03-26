@@ -1,4 +1,4 @@
-export type UiState = "initial" | "loading" | "error" | "data" | "empty";
+export type UiState = "initial" | "loading" | "error" | "data" | "empty" | "created";
 
 export type GenericGenre = {
   id: number;
@@ -15,6 +15,15 @@ export type GenericMovie = {
   slug: string;
   genres: string[];
 };
+
+export type MovieFormData = {
+  title: string;
+  year: string;
+  director: string;
+  image: File;
+  description: string;
+  genres: string[];  
+}
 
 export type GenreWithMovies = {
   id: number;
