@@ -37,6 +37,7 @@ export default function Navigation() {
         <li><Link href="/genres?page=1">Genres</Link></li>
         <li><Link href="/movies?page=1">Movies</Link></li>
         <li><Link href="/login">Log in</Link></li>
+        <li><Link href="/movieform">Bæta við mynd</Link></li>
         {uiState === 'loading' && <li>Sæki notanda</li>}
         {uiState === 'error' && <li>User not found</li>}
         {uiState === 'data' && (
