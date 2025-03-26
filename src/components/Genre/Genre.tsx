@@ -50,7 +50,7 @@ export default function Genres({ genre }: { genre: string }) {
 
   return (
     genreItem ? (
-      <Link className={styles.genre} href={`/genres/${genreItem.id}`}>
+      <Link className={styles.genre} href={`/genres/${genre.replace(/ /g, '-').toLowerCase()}`}>
         {uiState === "loading" && (
           <div className={styles.movieAmount}>
             <div className={styles.loader}></div>
@@ -61,12 +61,12 @@ export default function Genres({ genre }: { genre: string }) {
         <p className={styles.genreName}>{genreItem.name}</p>
       </Link>
     ) : (
-      <div className={styles.genre}>
+      <Link className={styles.genre} href={`/genres/${genre.replace(/ /g, '-').toLowerCase()}`}>
         <div className={styles.movieAmount}>
           <div className={styles.loader}></div>
         </div>
         <p className={styles.genreName}>{genre}</p>
-      </div>
+      </Link>
     )
   );
 }

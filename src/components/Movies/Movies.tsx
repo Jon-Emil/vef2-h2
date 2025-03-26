@@ -9,13 +9,14 @@ import Link from 'next/link';
 import Movie from '../Movie/Movie';
 
 
-export default function Movies({ genre_id = null }: { genre_id?: number | null }) {
+export default function Movies({ genre_slug = null }: { genre_slug?: string | null }) {
   const [uiState, setUiState] = useState<UiState>('initial');
   const [movies, setMovies] = useState<Array<GenericMovie> | null>(
     null,
   );
   const [limit, setLimit] = useState<number>(10);
   const [total, setTotal] = useState<number>(0);
+  const [genreName, setGenreName] = useState<string>("");
  
   const searchParams = useSearchParams();
   const page = parseInt(searchParams.get("page") ?? "1");
@@ -34,8 +35,19 @@ export default function Movies({ genre_id = null }: { genre_id?: number | null }
       const api = new QuestionsApi();
       let listOfMovies: GenericMovie[];
 
-      if (genre_id) {
-        const movieResponse = await api.getMoviesForGenre(page, genre_id, 9);
+      if (genre_slug) {
+        const allGenres = await api.getAllGenres();
+        if (!allGenres) {
+          setUiState('error');
+          return
+        }
+        const genreItem = allGenres.data.find(genreItem => genreItem.name.replace(/ /g, '-').toLowerCase() === genre_slug);
+        if (!genreItem) {
+          setUiState('error');
+          return
+        }
+        setGenreName(genreItem.name);
+        const movieResponse = await api.getMoviesForGenre(page, genreItem.id, 9);
         if (!movieResponse) {
           setUiState('error');
           return;
@@ -63,21 +75,22 @@ export default function Movies({ genre_id = null }: { genre_id?: number | null }
 
   return (
     <div>
-      <h2>Movies:</h2>
-
       {uiState === 'loading' && <p>Sæki myndir</p>}
       {uiState === 'error' && <p>Villa við að sækja myndir</p>}
       {uiState === 'data' && (
-        <div className={styles.movieSection}>
-          {movieRows.map((row, rowIndex) => (
-            <ul key={rowIndex} className={styles.movieRow}>
-              {row.map((movie, index) => (
-                <li key={(rowIndex+1) * (index+1)}>
-                  <Movie movie={movie} />
-                </li>
-              ))}
-            </ul>
-          ))}
+        <div>
+          <h2>{genre_slug ? `${genreName} Movies:` : "Movies:"}</h2>
+          <div className={styles.movieSection}>
+            {movieRows.map((row, rowIndex) => (
+              <ul key={rowIndex} className={styles.movieRow}>
+                {row.map((movie, index) => (
+                  <li key={(rowIndex+1) * (index+1)}>
+                    <Movie movie={movie} />
+                  </li>
+                ))}
+              </ul>
+            ))}
+          </div>
         </div>
       )}
       <ul className={styles.buttons}>
