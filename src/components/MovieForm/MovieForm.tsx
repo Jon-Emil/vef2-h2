@@ -90,7 +90,7 @@ export default function Form() {
             )}
         {uiState === 'data' && (
             <>
-            <label>
+            <label className={styles.labelForField}>
                 Title:
                 <input type="text" 
                 required
@@ -98,7 +98,7 @@ export default function Form() {
                 onChange={(e) => setMovieTitle(e.target.value)} />
             </label>
 
-            <label>
+            <label className={styles.labelForField}>
                 Year:
                 <input type="text" 
                 value={movieYear} 
@@ -107,7 +107,7 @@ export default function Form() {
                 />
             </label>
 
-            <label>
+            <label className={styles.labelForField}>
                 Director:
                 <input type="text" 
                 value={director} 
@@ -115,13 +115,14 @@ export default function Form() {
                 onChange={(e) => setDirector(e.target.value)} />
             </label>
 
-            <label>Genres:
+            <label className={styles.labelForField}>Genres:
                 <div>
                     {genres.data.map((genre) => (
-                        <label key={genre.id}>
+                        <label key={genre.id} className={styles.labelForField}>
                             <input 
                                 type="checkbox" 
                                 value={genre.name} 
+                                className={styles.checkbox_input}
                                 checked={selectedGenres.includes(genre.name)}
                                 onChange={(e) => {
                                     if (e.target.checked) {
@@ -137,7 +138,7 @@ export default function Form() {
                 </div>
             </label>
 
-            <label>
+            <label className={styles.labelForField}>
                 Movie description:
                 <input type="text" 
                 value={description} 
@@ -145,9 +146,10 @@ export default function Form() {
                 onChange={(e) => setDescription(e.target.value)} />
             </label>
 
-            <label>
+            <label className={styles.labelForField}>
                 Photo:
                 <input type="file" 
+                className={styles.file_input}
                 accept="image/jpeg, image/png" 
                 required
                 onChange={(e) => {
@@ -157,7 +159,7 @@ export default function Form() {
                 }} />
             </label>
 
-            <button type='submit'>Create movie!</button>
+            <button type='submit' className={styles.button}>Create movie!</button>
             </>
         )}
     </form>

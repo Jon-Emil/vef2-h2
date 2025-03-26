@@ -32,16 +32,16 @@ export default function Navigation() {
   
   return (
     <nav className={styles.nav}>
-      <ul>
-        <li><Link href="/">Forsíða</Link></li>
-        <li><Link href="/genres?page=1">Genres</Link></li>
-        <li><Link href="/movies?page=1">Movies</Link></li>
-        <li><Link href="/login">Log in</Link></li>
-        <li><Link href="/movieform">Bæta við mynd</Link></li>
-        {uiState === 'loading' && <li>Sæki notanda</li>}
-        {uiState === 'error' && <li>User not found</li>}
+      <ul className={styles.list}>
+        <li className={styles.nav_item}><Link href="/">Forsíða</Link></li>
+        <li className={styles.nav_item}><Link href="/genres?page=1">Genres</Link></li>
+        <li className={styles.nav_item}><Link href="/movies?page=1">Movies</Link></li>
+        <li className={styles.nav_item}><Link href="/login">Log in</Link></li>
+        <li className={styles.nav_item}><Link href="/movieform">Bæta við mynd</Link></li>
+        {uiState === 'loading' && <li className={styles.user_info}>Sæki notanda</li>}
+        {uiState === 'error' && <li className={styles.user_info}>User not found</li>}
         {uiState === 'data' && (
-          user ? <li>{user.username}</li> : <li>Not logged in</li>
+          user ? <li className={styles.user_info}>{user.username}</li> : <li className={styles.user_info}>Not logged in</li>
         )}
       </ul>
     </nav>

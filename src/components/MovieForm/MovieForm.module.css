@@ -2,4 +2,19 @@
     display: flex;
     flex-direction: column;
     gap: 2rem;
+
+    margin-top: 2rem; 
+    background-color: #333;
+    padding: 2rem;
+
+    border-radius: 20px;
+
+    width: 80%;
+}
+
+.labelForField{
+    display: flex;
+    flex-direction: row;
+    font-weight: bold;
+    font-size: 1rem;
 }
