@@ -75,8 +75,8 @@ export default function Login() {
                 />
             </div>
             <div className={styles.button_container}>
-                <button type="submit" className={styles.submit_buttons}>Log in</button>
-                <button type="submit" className={styles.submit_buttons}>Register</button>
+                <button type="submit" className={styles.submit_buttons} value="Login">Log in</button>
+                <button type="submit" className={styles.submit_buttons} value="Register">Register</button>
             </div>
         </form>
     </div>
