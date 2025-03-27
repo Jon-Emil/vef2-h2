@@ -96,9 +96,59 @@ export class QuestionsApi {
     return response;
   }
 
+  async getMovie(slug: string): Promise<GenericMovie | null> {
+    const url = BASE_URL + `/movies/${slug}`;
+
+    const response = await this.fetchFromApi<GenericMovie>(url);
+
+    // TODO hér gæti ég staðfest gerð gagna
+
+    return response;
+  }
+
   async logUserIn(user: UserInfo): Promise<tokenReturn | string> {
     console.log("user data: ", user);
     const url = BASE_URL + "/users/log_in";
+
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    });
+
+    if (response.status === 400) {
+      //túlka villuna sem json þar sem API skilar json villum fyrir 400 status
+      const errorResponse = await response.json();
+
+      const errorMessage = errorResponse.error || "Unknown error occurred";
+      const fieldErrors = errorResponse.errors?.fieldErrors || {};
+
+      //Túlka allar fieldError villur til að birta allt sem var að
+      for (const field in fieldErrors) {
+        if (fieldErrors[field].length > 0) {
+          console.error(`${field}: ${fieldErrors[field].join(", ")}`);
+        }
+      }
+      //skila streng af villum.
+      return `${errorMessage}: ${JSON.stringify(fieldErrors)}`;
+    }
+
+    if (response.status === 404) {
+      return "User not found";
+    }
+
+    if (!response.ok) {
+      return "Failed to log user in " + response.statusText;
+    }
+
+    return await response.json();
+  }
+
+  async registerUser(user: UserInfo): Promise<tokenReturn | string> {
+    console.log("user data: ", user);
+    const url = BASE_URL + "/users";
 
     const response = await fetch(url, {
       method: "POST",
@@ -167,7 +217,7 @@ export class QuestionsApi {
     return data;
   }
 
-  async createMovie(movieData: MovieFormData){
+  async createMovie(movieData: MovieFormData) {
     const cookies = document.cookie.split("; ");
     const tokenCookie = cookies.find((row) => row.startsWith("auth="));
     const token = tokenCookie ? tokenCookie.split("=")[1] : null;
@@ -190,23 +240,26 @@ export class QuestionsApi {
     const response = await fetch(url, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
       },
       body: formData,
     });
 
-    console.log(response)
+    console.log(response);
 
-    if(response.status === 401 || response.status === 403){
-      return "current user does not have permission to create movie, only admin can do that. If you are the admin, please log in/log in again"
+    if (response.status === 401 || response.status === 403) {
+      return "current user does not have permission to create movie, only admin can do that. If you are the admin, please log in/log in again";
     }
 
     if (response.status === 400) {
       //túlka villuna sem json þar sem API skilar json villum fyrir 400 status
       const errorResponse = await response.json();
-      console.log(errorResponse)
+      console.log(errorResponse);
 
-      const errorMessage = errorResponse.error || errorResponse.message || "Unknown error occurred";
+      const errorMessage =
+        errorResponse.error ||
+        errorResponse.message ||
+        "Unknown error occurred";
       const fieldErrors = errorResponse.errors?.fieldErrors || {};
 
       //Túlka allar fieldError villur til að birta allt sem var að
@@ -218,7 +271,6 @@ export class QuestionsApi {
       //skila streng af villum.
       return `${errorMessage}: ${JSON.stringify(fieldErrors)}`;
     }
-
 
     if (!response.ok) {
       return "Failed to create movie" + response.statusText;

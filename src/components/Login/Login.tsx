@@ -9,8 +9,11 @@ export default function Login() {
     const [username, setUsername] = useState<string>("")
     const [password, setPassword] = useState<string>("")
 
-    const submitForm = async (event: React.FormEvent) => {
+    const submitForm = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+
+        // eina leiðin sem ég gat gert þetta
+        const action = (event.nativeEvent as SubmitEvent).submitter as HTMLButtonElement;
 
         const userInfo: UserInfo = {
             username: username,
@@ -18,7 +21,17 @@ export default function Login() {
         }
 
         const api = new QuestionsApi();
-        const response = await api.logUserIn(userInfo);
+
+        let response
+
+        if ( action.value === "Login") {
+            response = await api.logUserIn(userInfo);
+        } else if ( action.value === "Register") {
+            response = await api.registerUser(userInfo);
+        } else {
+            alert("invalid button?");
+            return;
+        }
 
         if(typeof response === 'string'){
             alert(response)
@@ -28,6 +41,7 @@ export default function Login() {
         console.log(response)
 
         document.cookie = `auth=${response.token}; path=/; Secure; SameSite=Strict`;
+        window.location.href = "/";
     }
 
   return (
@@ -66,5 +80,6 @@ export default function Login() {
             </div>
         </form>
     </div>
+
   );
 }
