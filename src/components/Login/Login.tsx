@@ -3,6 +3,7 @@
 import { QuestionsApi } from "@/api";
 import { UserInfo } from "@/types";
 import { useState } from "react";
+import styles from './Login.module.css'
 
 export default function Login() {
     const [username, setUsername] = useState<string>("")
@@ -44,27 +45,41 @@ export default function Login() {
     }
 
   return (
-    <form onSubmit={submitForm}>
-        <input
-        type="text"
-        name="username"
-        placeholder="Enter username"
-        required
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        />
-        <input
-        type="password"
-        name="password"
-        placeholder="Enter password"
-        required
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        />
-        <div>
-            <button type="submit" value="Login">Log in</button>
-            <button type="submit" value="Register">Register</button>
-        </div>
-    </form>
+    <div className={styles.login}>
+        <form onSubmit={submitForm} name="form-login">
+            <div className={styles.heading_container}>
+                <h1>Log in</h1>
+            </div>
+            
+            <div className={styles.field_container}>
+                <input
+                className={styles.login_user_inp}
+                type="text"
+                name="username"
+                placeholder="Username"
+                required
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                />
+            </div>
+
+            <div className={styles.field_container}>
+                <input
+                className={styles.login_pass_inp}
+                type="password"
+                name="password"
+                placeholder="Password"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                />
+            </div>
+            <div className={styles.button_container}>
+                <button type="submit" className={styles.submit_buttons}>Log in</button>
+                <button type="submit" className={styles.submit_buttons}>Register</button>
+            </div>
+        </form>
+    </div>
+
   );
 }
