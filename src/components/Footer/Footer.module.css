@@ -1,0 +1,26 @@
+.Footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  gap: 10px;
+  width: 100%;
+  background-color: #333;
+
+  min-height: 4rem;
+
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+.Info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.Footer a {
+  color: var(--main-accent);
+  text-decoration: underline;
+}

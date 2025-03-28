@@ -1,20 +1,55 @@
-.form{
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 
-    margin-top: 2rem; 
-    background-color: #333;
-    padding: 2rem;
+  background-color: #333;
+  padding: 2rem;
 
-    border-radius: 20px;
+  border-radius: 20px;
 
-    width: 80%;
+  width: 80%;
 }
 
-.labelForField{
-    display: flex;
-    flex-direction: row;
-    font-weight: bold;
-    font-size: 1rem;
+.labelForField {
+  display: flex;
+  flex-direction: row;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  background-color: #000;
+  color: white;
+  cursor: pointer;
+}
+
+.checkbox input {
+  display: none;
+}
+
+.checkbox span {
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+  padding: 10px;
+  user-select: none;
+}
+
+.checkbox input:checked + span {
+  background-color: var(--main-accent);
+}
+
+.genreList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.checkbox:hover {
+  filter: brightness(1.5);
 }
