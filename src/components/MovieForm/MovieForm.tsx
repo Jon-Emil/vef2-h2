@@ -82,103 +82,122 @@ export default function Form() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className={styles.form}>
-      {uiState === "empty" && <p>Sækir upplýsingar</p>}
-      {uiState === "loading" && <p>býr til myndina</p>}
-      {uiState === "error" && <p>Villa við að bæta mynd við!</p>}
-      {uiState === "created" && (
-        <>
-          <h2>Mynd hefur verið bætt við</h2>
-          <p>Skoðaðu hana með því að velja movies í navigation barinu</p>
-        </>
-      )}
-      {uiState === "data" && (
-        <>
-          <label className={styles.labelForField}>
-            Title:
-            <input
-              type="text"
-              required
-              value={movieTitle}
-              onChange={(e) => setMovieTitle(e.target.value)}
-            />
-          </label>
+    <div className={styles.movie_form}>
+        <form onSubmit={handleSubmit}>
+            {uiState === 'empty' && <p>Sækir upplýsingar</p>}
+            {uiState === 'loading' && <p>býr til myndina</p>}
+            {uiState === 'error' && <p>Villa við að bæta mynd við!</p>}
+            {uiState === 'created' && (
+                <div className={styles.created}>
+                    <h2>Mynd hefur verið bætt við</h2>
+                    <p>Skoðaðu hana með því að velja movies í navigation barinu</p>
+                </div>
+                )}
+            {uiState === 'data' && (
+                <>
+                    <div className={styles.heading_container}>
+                        <h1>Create a new movie!</h1>
+                    </div>
 
-          <label className={styles.labelForField}>
-            Year:
-            <input
-              type="text"
-              value={movieYear}
-              required
-              onChange={(e) => setMovieYear(e.target.value)}
-            />
-          </label>
+                    <div className={styles.field_container}>
+                        <input type="text" 
+                        required
+                        placeholder='Title'
+                        value={movieTitle} 
+                        onChange={(e) => setMovieTitle(e.target.value)}
+                        className={styles.user_inp_title} 
+                        />
+                    </div>
 
-          <label className={styles.labelForField}>
-            Director:
-            <input
-              type="text"
-              value={director}
-              required
-              onChange={(e) => setDirector(e.target.value)}
-            />
-          </label>
+                    
+                    <div className={styles.field_container}>
+                        <input type="text" 
+                        value={movieYear} 
+                        placeholder='Year'
+                        required
+                        onChange={(e) => setMovieYear(e.target.value)}
+                        className={styles.user_inp_year} 
+                        />
+                    </div>
 
-          <label className={styles.labelForField}>Genres:</label>
+                    <div className={styles.field_container}>
+                        <input type="text" 
+                        placeholder='Director'
+                        value={director} 
+                        required
+                        onChange={(e) => setDirector(e.target.value)}
+                        className={styles.user_inp_director} 
+                        />
+                    </div>
 
-          <div className={styles.genreList}>
-            {genres.data.map((genre) => (
-              <label key={genre.id} className={styles.checkbox}>
-                <input
-                  type="checkbox"
-                  value={genre.name}
-                  className={styles.checkbox_input}
-                  checked={selectedGenres.includes(genre.name)}
-                  onChange={(e) => {
-                    if (e.target.checked) {
-                      setSelectedGenres([...selectedGenres, genre.name]);
-                    } else {
-                      setSelectedGenres(
-                        selectedGenres.filter((g) => g !== genre.name)
-                      );
-                    }
-                  }}
-                />
-                <span>{genre.name}</span>
-              </label>
-            ))}
-          </div>
+                    <div className={styles.field_container}>
+                        <input type="text" 
+                        value={description} 
+                        placeholder='Description'
+                        required
+                        onChange={(e) => setDescription(e.target.value)}
+                        className={styles.user_inp_desc} 
+                        />
+                    </div>
 
-          <label className={styles.labelForField}>
-            Movie description:
-            <input
-              type="text"
-              value={description}
-              required
-              onChange={(e) => setDescription(e.target.value)}
-            />
-          </label>
+                    <div className={styles.field_container}>
+                        <div className={styles.middle_text}>
+                            <p>Genres: </p>
+                        </div>
+                    </div>
+                    <div className={styles.field_container}>
+                        <div className={styles.genres_list}>
+                            {genres.data.map((genre) => (
+                                <label key={genre.id} >
+                                    <input 
+                                        type="checkbox"
+                                        value={genre.name} 
+                                        checked={selectedGenres.includes(genre.name)}
+                                        onChange={(e) => {
+                                            if (e.target.checked) {
+                                                setSelectedGenres([...selectedGenres, genre.name]);
+                                            } else {
+                                                setSelectedGenres(selectedGenres.filter(g => g !== genre.name));
+                                            }
+                                        }}
+                                    />
+                                    {genre.name}
+                                </label>
+                            ))}
+                        </div>
+                    </div>
 
-          <label className={styles.labelForField}>
-            Photo:
-            <input
-              type="file"
-              className={styles.file_input}
-              accept="image/jpeg, image/png"
-              required
-              onChange={(e) => {
-                if (e.target.files) {
-                  setImageFile(e.target.files[0]);
-                }
-              }}
-            />
-          </label>
+                    <div className={styles.field_container}>
+                        <div className={styles.middle_text}>
+                            <p>Image: </p>
+                        </div>
+                    </div>
+                    <div className={styles.field_container}>
+                        <input 
+                            type="file" 
+                            id="fileUpload"
+                            className={styles.file_input}
+                            accept="image/jpeg, image/png" 
+                            required
+                            onChange={(e) => {
+                                if (e.target.files) {
+                                    setImageFile(e.target.files[0]);
+                                }
+                            }} 
+                        />
+                        <label htmlFor="fileUpload" className={styles.file_label}>
+                            📁 Choose a file
+                        </label>
 
-          <button type="submit" className={styles.button}>
-            Create movie!
-          </button>
-        </>
-      )}
-    </form>
+                        {imageFile && <p className={styles.file_name}><strong>File chosen </strong> &gt; {imageFile.name}</p>}
+                    </div>
+
+                    <div className={styles.field_container}>
+                        <button type='submit' className={styles.submit_button}>Create movie!</button>
+                    </div>
+                </>
+            )}
+        </form>
+    </div>
   );
 }
