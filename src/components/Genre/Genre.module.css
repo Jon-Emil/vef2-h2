@@ -13,8 +13,13 @@
 
 .movieAmount {
   background-color: var(--main-accent);
-  padding: 10px 8px;
+  padding: 5px;
   color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 30px;
+  min-height: 20px;
 }
 
 .genreName {

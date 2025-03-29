@@ -1,19 +1,67 @@
-.movieSection {
+.movies {
   display: flex;
   flex-direction: column;
+  gap: 10px;
+}
+
+.movieSection {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 10px;
+  background-color: #222;
+  row-gap: 6px;
+}
+
+.movieSection > li {
+  grid-column: span 4;
+}
+
+@media (max-width: 900px) {
+  .movieSection > li {
+    grid-column: span 6;
+  }
+}
+
+@media (max-width: 600px) {
+  .movieSection > li {
+    grid-column: span 12;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.loadingSection {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
   gap: 10px;
   background-color: #222;
 }
 
-.movieRow {
-  display: flex;
-  gap: 8px;
-  padding: 5px;
-  background-color: #444;
+.loadingSection > * {
+  aspect-ratio: 2 / 3;
+  background: linear-gradient(90deg, #ccc 25%, #ddd 50%, #ccc 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite linear;
+  grid-column: span 4;
 }
 
-.movieRow > * {
-  max-width: calc((100% - 16px) / 3);
+@media (max-width: 900px) {
+  .loadingSection > * {
+    grid-column: span 6;
+  }
+}
+
+@media (max-width: 600px) {
+  .loadingSection > * {
+    grid-column: span 12;
+  }
 }
 
 .button {
@@ -28,7 +76,7 @@
 }
 
 .button:hover {
-  background-color: red;
+  background-color: var(--main-accent);
 }
 
 .buttonNext {
@@ -37,6 +85,5 @@
 
 .buttons {
   display: flex;
-  padding: 20px;
-  background-color: #000;
+  padding: 10px;
 }
