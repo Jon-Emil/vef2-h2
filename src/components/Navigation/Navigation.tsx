@@ -51,22 +51,22 @@ export default function Navigation({ site }: { site: string }) {
         </li>
         <li
           className={`${styles.nav_item} ${
+            site === "movieform" ? styles.selected : ""
+          }`}
+        >
+          <Link href="/movieform">Add Movie</Link>
+        </li>
+        <li
+          className={`${styles.nav_item} ${
             site === "login" ? styles.selected : ""
           }`}
         >
           <Link href="/login">
-            {uiState === "initial" && <p>Loading user...</p>}
-            {uiState === "loading" && <p>Loading user...</p>}
-            {uiState === "error" && <p>Log in</p>}
+            {uiState === "initial" && <p>Loading User...</p>}
+            {uiState === "loading" && <p>Loading User...</p>}
+            {uiState === "error" && <p>Log In</p>}
             {uiState === "data" && user && <p>{user.username}</p>}
           </Link>
-        </li>
-        <li
-          className={`${styles.nav_item} ${
-            site === "movieform" ? styles.selected : ""
-          }`}
-        >
-          <Link href="/movieform">Bæta við mynd</Link>
         </li>
       </ul>
     </nav>

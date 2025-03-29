@@ -7,7 +7,6 @@ import styles from "./Movies.module.css";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Movie from "../Movie/Movie";
-import { useContextValues } from "../ContextHolder/ContextHolder";
 
 export default function Movies({
   genre_slug = null,
@@ -19,13 +18,9 @@ export default function Movies({
   const [limit, setLimit] = useState<number>(9);
   const [total, setTotal] = useState<number>(0);
   const [genreName, setGenreName] = useState<string>("");
-  const { movieAmount, setMovieAmount } = useContextValues();
 
   const searchParams = useSearchParams();
   const page = parseInt(searchParams.get("page") ?? "1");
-
-  let loadingMovies = movieAmount ? movieAmount - 9 * page : 9;
-  let loadingRows = Math.ceil(loadingMovies / 3);
 
   // temp
   const sleep = (ms: number) =>
@@ -40,7 +35,7 @@ export default function Movies({
 
   useEffect(() => {
     async function fetchData() {
-      await sleep(5000); // fake load time for dev
+      await sleep(1000); // fake load time for dev
       const api = new QuestionsApi();
       let listOfMovies: GenericMovie[];
 
@@ -62,7 +57,7 @@ export default function Movies({
         const movieResponse = await api.getMoviesForGenre(
           page,
           genreItem.id,
-          9
+          12
         );
         if (!movieResponse) {
           setUiState("error");
@@ -70,10 +65,9 @@ export default function Movies({
         }
         setLimit(movieResponse.limit);
         setTotal(movieResponse.total);
-        setMovieAmount(movieResponse.total);
         listOfMovies = movieResponse.data.movies;
       } else {
-        const movieResponse = await api.getMovies(page, 9);
+        const movieResponse = await api.getMovies(page, 12);
         if (!movieResponse) {
           setUiState("error");
           return;
@@ -90,38 +84,32 @@ export default function Movies({
   }, [page]);
 
   return (
-    <div>
-      {uiState === "loading" && (
-        <div>
-          <h2>Loading Movies...</h2>
-          <div className={styles.movieSection}>
-            {Array.from({ length: loadingRows }).map((_, index) => (
-              <ul key={index} className={styles.fakeRow}>
-                {Array.from({ length: 3 }).map((_, movieIndex) => (
-                  <li key={movieIndex + index}>
-                    <div className={styles.fakeMovie} />
-                  </li>
-                ))}
-              </ul>
-            ))}
-          </div>
-        </div>
-      )}
+    <div className={styles.movies}>
+      {uiState === "loading" && <h2>Loading Movies...</h2>}
       {uiState === "error" && <p>Villa við að sækja myndir</p>}
       {uiState === "data" && (
+        <h2>{genre_slug ? `${genreName} Movies:` : "Movies:"}</h2>
+      )}
+      {uiState === "loading" && (
         <div>
-          <h2>{genre_slug ? `${genreName} Movies:` : "Movies:"}</h2>
-          <div className={styles.movieSection}>
-            {movieRows.map((row, rowIndex) => (
-              <ul key={rowIndex} className={styles.movieRow}>
-                {row.map((movie, index) => (
-                  <li key={(rowIndex + 1) * (index + 1)}>
-                    <Movie movie={movie} />
-                  </li>
-                ))}
-              </ul>
+          <ul className={styles.loadingSection}>
+            {Array.from({ length: 12 }).map((_, movieIndex) => (
+              <li key={movieIndex}>
+                <div className={styles.fakeMovie} />
+              </li>
             ))}
-          </div>
+          </ul>
+        </div>
+      )}
+      {uiState === "data" && (
+        <div>
+          <ul className={styles.movieSection}>
+            {movies?.map((movie, index) => (
+              <li key={index}>
+                <Movie movie={movie} />
+              </li>
+            ))}
+          </ul>
         </div>
       )}
       <ul className={styles.buttons}>

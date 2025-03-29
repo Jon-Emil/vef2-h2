@@ -5,7 +5,7 @@ import styles from "./Movie.module.css";
 import Genre from "../Genre/Genre";
 import Link from "next/link";
 
-export default function Genres({ movie }: { movie: GenericMovie }) {
+export default function Movie({ movie }: { movie: GenericMovie }) {
   return (
     <div className={styles.movie}>
       <Link href={`/movies/${movie.slug}`}>

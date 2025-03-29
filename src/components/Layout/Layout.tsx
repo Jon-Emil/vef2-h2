@@ -3,7 +3,6 @@
 import { usePathname } from "next/navigation";
 import Navigation from "@/components/Navigation/Navigation";
 import Footer from "@/components/Footer/Footer";
-import ContextHolder from "@/components/ContextHolder/ContextHolder";
 
 export default function LayoutClient({
   children,
@@ -18,9 +17,7 @@ export default function LayoutClient({
       <header>
         <Navigation site={siteCategory} />
       </header>
-      <main>
-        <ContextHolder>{children}</ContextHolder>
-      </main>
+      <main>{children}</main>
       <footer>
         <Footer />
       </footer>

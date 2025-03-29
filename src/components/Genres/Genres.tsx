@@ -24,19 +24,6 @@ export default function Genres() {
         setUiState("error");
       } else {
         setUiState("data");
-        genreResponse.data.sort((a, b) => {
-          // temporary bc can change api to do this easily this was just a test
-          const nameA = a.name.toLowerCase();
-          const nameB = b.name.toLowerCase();
-
-          if (nameA < nameB) {
-            return -1;
-          }
-          if (nameA > nameB) {
-            return 1;
-          }
-          return 0;
-        });
         setGenres(genreResponse);
       }
     }
