@@ -1,6 +1,4 @@
-import Navigation from "@/components/Navigation/Navigation";
 import Movies from "@/components/Movies/Movies";
-import Footer from "@/components/Footer/Footer";
 
 export default async function Home({
   params,

@@ -1,12 +1,13 @@
 "use client";
 
 import { QuestionsApi } from "@/api";
-import { GenericMovie, Paginated, UiState } from "@/types";
+import { GenericMovie, UiState } from "@/types";
 import { useEffect, useState } from "react";
 import styles from "./Movies.module.css";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Movie from "../Movie/Movie";
+import NotFound from "../NotFound/NotFound";
 
 export default function Movies({
   genre_slug = null,
@@ -22,10 +23,6 @@ export default function Movies({
   const searchParams = useSearchParams();
   const page = parseInt(searchParams.get("page") ?? "1");
 
-  // temp
-  const sleep = (ms: number) =>
-    new Promise((resolve) => setTimeout(resolve, ms));
-
   const movieRows = [];
   if (movies) {
     for (let i = 0; i < movies.length; i += 3) {
@@ -35,7 +32,6 @@ export default function Movies({
 
   useEffect(() => {
     async function fetchData() {
-      await sleep(1000); // fake load time for dev
       const api = new QuestionsApi();
       let listOfMovies: GenericMovie[];
 
@@ -81,12 +77,12 @@ export default function Movies({
       setMovies(listOfMovies);
     }
     fetchData();
-  }, [page]);
+  }, [page, genre_slug]);
 
   return (
     <div className={styles.movies}>
       {uiState === "loading" && <h2>Loading Movies...</h2>}
-      {uiState === "error" && <p>Villa við að sækja myndir</p>}
+      {uiState === "error" && <NotFound/>}
       {uiState === "data" && (
         <h2>{genre_slug ? `${genreName} Movies:` : "Movies:"}</h2>
       )}

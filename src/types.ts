@@ -1,4 +1,4 @@
-export type UiState = "initial" | "loading" | "error" | "data" | "empty" | "created";
+export type UiState = "initial" | "loading" | "error" | "data" | "empty" | "created" | "protected";
 
 export type GenericGenre = {
   id: number;

@@ -34,16 +34,13 @@ export default function Genres({ genre }: { genre: string }) {
         setUiState("error");
       } else {
         setUiState("data");
-        let amountOfMovies = 0;
-        for (let movie of genreResponse.data.movies) {
-          amountOfMovies++;
-        }
+        const amountOfMovies = genreResponse.data.movies.length;
         setGenreItem(genreItem);
         setMovieAmount(amountOfMovies);
       }
     }
     fetchData();
-  }, []);
+  }, [genre]);
 
   return genreItem ? (
     <Link
