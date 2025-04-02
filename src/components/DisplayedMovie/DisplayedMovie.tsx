@@ -1,10 +1,11 @@
 "use client";
 
 import { QuestionsApi } from "@/api";
-import { GenericGenre, GenericMovie, Paginated, UiState } from "@/types";
+import { GenericMovie, UiState } from "@/types";
 import { useEffect, useState } from "react";
 import Genre from "../Genre/Genre";
 import styles from "./DisplayedMovie.module.css";
+import NotFound from "../NotFound/NotFound";
 
 export default function Genres({ movieSlug }: { movieSlug: string }) {
   const [uiState, setUiState] = useState<UiState>("initial");
@@ -30,7 +31,7 @@ export default function Genres({ movieSlug }: { movieSlug: string }) {
   return (
     <div>
       {uiState === "loading" && <p>Sæki mynd</p>}
-      {uiState === "error" && <p>Villa við að sækja mynd</p>}
+      {uiState === "error" && <NotFound/>}
       {uiState === "data" && movie && (
         <div>
           <img

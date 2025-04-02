@@ -4,6 +4,7 @@ import { QuestionsApi } from "@/api";
 import { GenericGenre, MovieFormData, Paginated, UiState } from "@/types";
 import { useEffect, useState } from "react";
 import styles from "./MovieForm.module.css";
+import Unauthorized from "../Unauthorized/Unauthorized";
 
 export default function Form() {
   const [uiState, setUiState] = useState<UiState>("empty");
@@ -25,6 +26,14 @@ export default function Form() {
       setUiState("empty");
 
       const api = new QuestionsApi();
+
+      const user = await api.getUser();
+
+      if(!user || !user.admin){
+        setUiState("protected")
+        return
+      }
+
       const genreResponse = await api.getAllGenres();
 
       if (!genreResponse) {
@@ -58,8 +67,6 @@ export default function Form() {
       genres: selectedGenres,
     };
 
-    console.log("Sel genres ", selectedGenres);
-
     setUiState("loading");
 
     const api = new QuestionsApi();
@@ -68,6 +75,7 @@ export default function Form() {
     if (typeof response === "string") {
       alert(response);
       setUiState("error");
+      return
     }
     if (!response) {
       setUiState("error");
@@ -87,6 +95,7 @@ export default function Form() {
             {uiState === 'empty' && <p>Sækir upplýsingar</p>}
             {uiState === 'loading' && <p>býr til myndina</p>}
             {uiState === 'error' && <p>Villa við að bæta mynd við!</p>}
+            {uiState === 'protected' && <Unauthorized/>}
             {uiState === 'created' && (
                 <div className={styles.created}>
                     <h2>Mynd hefur verið bætt við</h2>
