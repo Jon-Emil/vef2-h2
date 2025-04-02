@@ -5,9 +5,10 @@ export default async function Home({
 }: {
   params: Promise<{ movieSlug: string }>;
 }) {
+  const par = await params;
   return (
     <>
-      <DisplayedMovie movieSlug={(await params).movieSlug} />
+      <DisplayedMovie movieSlug={par.movieSlug} />
     </>
   );
 }
