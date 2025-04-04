@@ -16,7 +16,7 @@ Opnaðu svo [http://localhost:3000](http://localhost:3000) í vafra til að sjá
 
 Þetta verkefni er kvikmynda síða sem heitir Movie Archive. Þar inni er hægt að skoða lista af myndum eftir genres. Einnig er hægt að skrá sig inn og admin getur bætt við mynd á síðuna. 
 
-## gögn
+## Gögn
 
 Harðkóðaður admin hefur:
 
@@ -27,3 +27,10 @@ Setja þarf eftirfarandi í .env skrá:
 
 NEXT_PUBLIC_BASE_URL=https://vef2-hopverkefni1-8dml.onrender.com
 
+## Höfundar
+
+Sigurdur-ari 
+
+Jon-Emil 
+
+Dagurvidar
