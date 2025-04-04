@@ -1,36 +1,29 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+## Keyrsla
 
-First, run the development server:
+Til þess að keyra verkefnið þarf að clonea þetta repo og keyra eftirfarandi: 
 
 ```bash
+npm install
+
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Opnaðu svo [http://localhost:3000](http://localhost:3000) í vafra til að sjá verkefnið keyrandi. 
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Upplýsingar um verkefnið
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Þetta verkefni er kvikmynda síða sem heitir Movie Archive. Þar inni er hægt að skoða lista af myndum eftir genres. Einnig er hægt að skrá sig inn og admin getur bætt við mynd á síðuna. 
 
-## Learn More
+## gögn
 
-To learn more about Next.js, take a look at the following resources:
+Harðkóðaður admin hefur:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+username: admin
+password: 1234567
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Setja þarf eftirfarandi í .env skrá:
 
-## Deploy on Vercel
+NEXT_PUBLIC_BASE_URL=https://vef2-hopverkefni1-8dml.onrender.com
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
